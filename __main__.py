@@ -18,10 +18,10 @@ __instructions = \
 
 def execute_instruction(a, b):
     global icounter
-    instruction = create_instruction(cells[a], cells[b])
+    instruction = create_instruction(a.getvalue(), b.getvalue())
     opcode = instruction[0]
     operation = __instructions[opcode]
-    icounter = icounter + 1
+    icounter = icounter + 2
 
     if opcode == '1':
         load_from_cell(instruction)
@@ -52,7 +52,7 @@ def execute_instruction(a, b):
 
 
 def create_instruction(a, b):
-    completeinstruction = (str(a.getvalue()) + str(b.getvalue()))
+    completeinstruction = (a + b)
 
     return completeinstruction
 
@@ -121,12 +121,13 @@ def rotate(instruction):
 
 
 # If instruction looks like BRXY, jump to the instruction
-# in the memory cell at address X, Y if the bit pattern in
+# in the memory cell at address XY if the bit pattern in
 # register R is equal to the bit pattern in register 0
 def jump(instruction):
     global icounter
     print("jump")
-
+    if instruction[1] == registers[0].getvalue():
+        icounter = int(instruction, 16)
 
 # Halt execution.
 def halt():
@@ -136,15 +137,17 @@ def halt():
 def execute():
     global icounter
     execute_instruction(cells[icounter], cells[icounter + 1])
+    if not complete and len(cells) >= icounter + 3:
+        execute()
 
 def main():
-    global icounter
+    global icounter, complete
 
     numcells = int(input("How many memory cells would you like to have? "))
 
     numregisters = int(input("How many registers would you like to have? "))
 
-    icounter = input("What hex value would you like to set the instruction counter at? ")
+    icounter = int(input("What hex value would you like to set the instruction counter at? "), 16)
 
     done = False
 
@@ -172,17 +175,32 @@ def main():
 
         if nextstep == 'r':
             which = input("Which register would you like to edit? ")
-            what = input("What value would you like to put into register " + which + "? ")
+
+            what = "inital"
+            while len(what) != 2:
+                what = input("What value would you like to put into register " + which + "? ")
+                if len(what) != 2 or int(what, 16) < 0 or int(what, 16) > 255:
+                    print("Please enter a two letter hex value between 00 and ff.")
 
             registers[int(which, 16)].setvalue(what)
 
         elif nextstep == 'm':
             which = input("Which memory cell would you like to edit? ")
-            what = input("What value would you like to put into memory cell " + which + "? ")
+
+            what = "inital"
+            while len(what) != 2:
+                what = input("What value would you like to put into memory cell " + which + "? ")
+                if len(what) != 2 or int(what, 16) < 0 or int(what, 16) > 255:
+                    print("Please enter a two letter hex value between 00 and ff.")
 
             cells[int(which, 16)].setvalue(what)
         elif nextstep == 'e':
+            print("-----EXECUTION-----")
             execute()
+            if complete == True:
+                print("---PROGRAM HALTED--")
+                complete = False
+            print("---END EXECUTION---")
         else:
             done = True
 
