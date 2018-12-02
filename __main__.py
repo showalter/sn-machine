@@ -71,7 +71,7 @@ def load_with(instruction):
 # If instruction looks like 3RXY, store the contents
 # of register R in memory cell XY
 def store(instruction):
-    print("Move")
+    print("Store")
 
 
 # If instruction looks like 4*RS, move/copy the bit
@@ -98,6 +98,11 @@ def add_float(instruction):
 # in registers S and T and store the result in R
 def orinstr(instruction):
     print("or")
+    r = registers[instruction[1]]
+    s = registers[instruction[2]]
+    t = registers[instruction[3]]
+
+    r.setvaluehex(int(s.getvalue(), 16)) | hex(int(t.getvalue(), 16))
 
 
 # If instruction looks like 8RST, and the bit patterns
@@ -125,7 +130,6 @@ def rotate(instruction):
 # register R is equal to the bit pattern in register 0
 def jump(instruction):
     global icounter
-    print("jump")
     if instruction[1] == registers[0].getvalue():
         icounter = int(instruction, 16)
 
