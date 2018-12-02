@@ -66,7 +66,9 @@ def load_from_cell(instruction):
 # with the bit pattern XY
 def load_with(instruction):
     print("Load with pattern")
-
+    r = registers[int(instruction[1], 16)]
+    value = instruction[2:]
+    r.setvalue(value)
 
 # If instruction looks like 3RXY, store the contents
 # of register R in memory cell XY
