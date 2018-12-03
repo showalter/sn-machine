@@ -87,7 +87,24 @@ def move(instruction):
 # in registers S and T and store the result in R as
 # a two's complement representation
 def add_complement(instruction):
-    print("Add with twos complement")
+    r = registers[int(instruction[1], 16)]
+    s = registers[int(instruction[2], 16)]
+    t = registers[int(instruction[3], 16)]
+
+    sval = s.getvalue()
+    tval = t.getvalue()
+
+    if sval > 127:
+        sval = - sval
+    if tval > 127:
+        tval = - tval
+
+    value = sval + tval
+
+    if value > 127:
+        value = - value
+
+    r.setvalue(hex(value))
 
 
 # If instruction looks like 6RST, add the bit patterns
