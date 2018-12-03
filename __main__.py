@@ -18,7 +18,7 @@ __instructions = \
 
 def execute_instruction(a, b):
     global icounter
-    instruction = create_instruction(a.getvalue(), b.getvalue())
+    instruction = create_instruction(a.tostr(), b.tostr())
     opcode = instruction[0]
     operation = __instructions[opcode]
     icounter = icounter + 2
@@ -65,8 +65,9 @@ def load_from_cell(instruction):
 # If instruction looks like 2RXY, load register R
 # with the bit pattern XY
 def load_with(instruction):
-    print("Load with pattern")
+
     r = registers[int(instruction[1], 16)]
+
     value = instruction[2:]
     r.setvalue(value)
 
@@ -99,12 +100,11 @@ def add_float(instruction):
 # If instruction looks like 7RST, or the bit patterns
 # in registers S and T and store the result in R
 def orinstr(instruction):
-    print("or")
     r = registers[instruction[1]]
     s = registers[instruction[2]]
     t = registers[instruction[3]]
 
-    r.setvaluehex(int(s.getvalue(), 16)) | hex(int(t.getvalue(), 16))
+    r.setvalue(s.getvalue() | t.getvalue())
 
 
 # If instruction looks like 8RST, and the bit patterns
@@ -170,11 +170,11 @@ def main():
     while not done:
         print("Memory Cells")
         for cell in cells:
-            print(cell.getid(), " ", cell.getvalue())
+            print(cell.getid(), " ", cell.tostr())
 
         print("Registers")
         for register in registers:
-            print(register.getid(), " ", register.getvalue())
+            print(register.getid(), " ", register.tostr())
 
         nextstep = input("Type r to edit a register, m to edit a memory cell, \n"
                          "e to execute or anything else to quit. ")
@@ -203,7 +203,7 @@ def main():
         elif nextstep == 'e':
             print("-----EXECUTION-----")
             execute()
-            if complete == True:
+            if complete:
                 print("---PROGRAM HALTED--")
                 complete = False
             print("---END EXECUTION---")
