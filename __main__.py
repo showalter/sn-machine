@@ -120,7 +120,11 @@ def andinstr(instruction):
 # If instruction looks like 9RST, xor the bit patterns
 # in registers S and T and store the result in R
 def xor(instruction):
-    print("xor")
+    r = registers[instruction[1]]
+    s = registers[instruction[2]]
+    t = registers[instruction[3]]
+
+    r.setvalue(s.getvalue() ^ t.getvalue())
 
 
 # If instruction looks like AR*X, rotate the bit pattern
