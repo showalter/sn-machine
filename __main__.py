@@ -76,6 +76,12 @@ def load_with(instruction):
 # of register R in memory cell XY
 def store(instruction):
     print("Store")
+    r = registers[int(instruction[1], 16)]
+    xy = instruction[2:]
+    xy = cells[int(xy, 16)]
+
+    xy.setvalue(hex(r.getvalue()))
+
 
 
 # If instruction looks like 4*RS, move/copy the bit
