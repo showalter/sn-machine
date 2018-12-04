@@ -113,9 +113,12 @@ def add_complement(instruction):
 
 # If instruction looks like 6RST, add the bit patterns
 # in registers S and T and store the result in R as
-# a floating-point representation
+# two's complement. This may be updated later to add
+# numbers as floats, but precision with 8 bits is not
+# great, and it's hard to see situations where this
+# little precision is useful.
 def add_float(instruction):
-    print("Add with float")
+    add_complement(instruction)
 
 
 # If instruction looks like 7RST, or the bit patterns
