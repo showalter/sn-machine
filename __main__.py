@@ -62,6 +62,7 @@ def load_from_cell(instruction):
     print("Load from cell")
 
 
+
 # If instruction looks like 2RXY, load register R
 # with the bit pattern XY
 def load_with(instruction):
@@ -81,7 +82,10 @@ def store(instruction):
 # pattern in register R to register S
 def move(instruction):
     print("Move")
+    r = registers[int(instruction[2], 16)]
+    s = registers[int(instruction[3], 16)]
 
+    s.setvalue(hex(r.getvalue()))
 
 # If instruction looks like 5RST, add the bit patterns
 # in registers S and T and store the result in R as
