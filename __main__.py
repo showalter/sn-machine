@@ -59,7 +59,11 @@ def create_instruction(a, b):
 # If instruction looks like 1RXY, load register R
 # with the bits found in memory cell XY
 def load_from_cell(instruction):
-    print("Load from cell")
+    r = registers[int(instruction[1], 16)]
+    xy = instruction[2:]
+    xy = cells[int(xy, 16)]
+
+    r.setvalue(hex(xy.getvalue()))
 
 
 
