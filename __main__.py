@@ -74,7 +74,7 @@ def load_with(instruction):
     r = registers[int(instruction[1], 16)]
 
     value = instruction[2:]
-    r.setvalue(hex(value))
+    r.setvalue(hex(int(value, 16)))
 
 # If instruction looks like 3RXY, store the contents
 # of register R in memory cell XY
