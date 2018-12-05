@@ -18,7 +18,7 @@ __instructions = \
 
 def execute_instruction(a, b):
     global icounter
-    instruction = create_instruction(a.getvalue(), b.getvalue())
+    instruction = create_instruction(a.tostr(), b.tostr())
     opcode = instruction[0]
     operation = __instructions[opcode]
     icounter = icounter + 2
@@ -59,57 +59,104 @@ def create_instruction(a, b):
 # If instruction looks like 1RXY, load register R
 # with the bits found in memory cell XY
 def load_from_cell(instruction):
-    print("Load from cell")
+    r = registers[int(instruction[1], 16)]
+    xy = instruction[2:]
+    xy = cells[int(xy, 16)]
+
+    r.setvalue(hex(xy.getvalue()))
+
 
 
 # If instruction looks like 2RXY, load register R
 # with the bit pattern XY
 def load_with(instruction):
-    print("Load with pattern")
 
+    r = registers[int(instruction[1], 16)]
+
+    value = instruction[2:]
+    r.setvalue(hex(value))
 
 # If instruction looks like 3RXY, store the contents
 # of register R in memory cell XY
 def store(instruction):
-    print("Move")
+    r = registers[int(instruction[1], 16)]
+    xy = instruction[2:]
+    xy = cells[int(xy, 16)]
+
+    xy.setvalue(hex(r.getvalue()))
+
 
 
 # If instruction looks like 4*RS, move/copy the bit
 # pattern in register R to register S
 def move(instruction):
-    print("Move")
+    r = registers[int(instruction[2], 16)]
+    s = registers[int(instruction[3], 16)]
 
+    s.setvalue(hex(r.getvalue()))
 
 # If instruction looks like 5RST, add the bit patterns
 # in registers S and T and store the result in R as
 # a two's complement representation
 def add_complement(instruction):
-    print("Add with twos complement")
+    r = registers[int(instruction[1], 16)]
+    s = registers[int(instruction[2], 16)]
+    t = registers[int(instruction[3], 16)]
+
+    sval = s.getvalue()
+    tval = t.getvalue()
+
+    if sval > 127:
+        sval = - sval
+    if tval > 127:
+        tval = - tval
+
+    value = sval + tval
+
+    if value > 127:
+        value = - value
+
+    r.setvalue(hex(value))
 
 
 # If instruction looks like 6RST, add the bit patterns
 # in registers S and T and store the result in R as
-# a floating-point representation
+# two's complement. This may be updated later to add
+# numbers as floats, but precision with 8 bits is not
+# great, and it's hard to see situations where this
+# little precision is useful.
 def add_float(instruction):
-    print("Add with float")
+    add_complement(instruction)
 
 
 # If instruction looks like 7RST, or the bit patterns
 # in registers S and T and store the result in R
 def orinstr(instruction):
-    print("or")
+    r = registers[int(instruction[1], 16)]
+    s = registers[int(instruction[2], 16)]
+    t = registers[int(instruction[3], 16)]
+
+    r.setvalue(hex(s.getvalue() | t.getvalue()))
 
 
 # If instruction looks like 8RST, and the bit patterns
 # in registers S and T and store the result in R
 def andinstr(instruction):
-    print("and")
+    r = registers[int(instruction[1], 16)]
+    s = registers[int(instruction[2], 16)]
+    t = registers[int(instruction[3], 16)]
+
+    r.setvalue(hex(s.getvalue() & t.getvalue()))
 
 
 # If instruction looks like 9RST, xor the bit patterns
 # in registers S and T and store the result in R
 def xor(instruction):
-    print("xor")
+    r = registers[int(instruction[1], 16)]
+    s = registers[int(instruction[2], 16)]
+    t = registers[int(instruction[3], 16)]
+
+    r.setvalue(hex(s.getvalue() ^ t.getvalue()))
 
 
 # If instruction looks like AR*X, rotate the bit pattern
@@ -117,7 +164,16 @@ def xor(instruction):
 # Each time place the bit that started on the low end on
 # the high end.
 def rotate(instruction):
-    print("rotate")
+    bits = 8
+
+    r = registers[int(instruction[1], 16)]
+    x = registers[int(instruction[3], 16)].getvalue()
+
+    n = x % bits
+    a = r.getvalue() >> n
+    b = r.getvalue() << ((bits - n) % 256)
+    value = a | b
+    r.setvalue(hex(value))
 
 
 # If instruction looks like BRXY, jump to the instruction
@@ -125,9 +181,8 @@ def rotate(instruction):
 # register R is equal to the bit pattern in register 0
 def jump(instruction):
     global icounter
-    print("jump")
-    if instruction[1] == registers[0].getvalue():
-        icounter = int(instruction, 16)
+    if registers[int(instruction[1], 16)].getvalue() == registers[0].getvalue():
+        icounter = int(instruction[2:], 16)
 
 # Halt execution.
 def halt():
@@ -164,11 +219,11 @@ def main():
     while not done:
         print("Memory Cells")
         for cell in cells:
-            print(cell.getid(), " ", cell.getvalue())
+            print(cell.getid(), " ", cell.tostr())
 
         print("Registers")
         for register in registers:
-            print(register.getid(), " ", register.getvalue())
+            print(register.getid(), " ", register.tostr())
 
         nextstep = input("Type r to edit a register, m to edit a memory cell, \n"
                          "e to execute or anything else to quit. ")
@@ -197,7 +252,7 @@ def main():
         elif nextstep == 'e':
             print("-----EXECUTION-----")
             execute()
-            if complete == True:
+            if complete:
                 print("---PROGRAM HALTED--")
                 complete = False
             print("---END EXECUTION---")
