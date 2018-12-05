@@ -182,7 +182,7 @@ def rotate(instruction):
 def jump(instruction):
     global icounter
     if registers[int(instruction[1], 16)].getvalue() == registers[0].getvalue():
-        icounter = int(instruction, 16)
+        icounter = int(instruction[2:], 16)
 
 # Halt execution.
 def halt():
