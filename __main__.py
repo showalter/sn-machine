@@ -164,7 +164,16 @@ def xor(instruction):
 # Each time place the bit that started on the low end on
 # the high end.
 def rotate(instruction):
-    print("rotate")
+    bits = 8
+
+    r = registers[int(instruction[1], 16)]
+    x = registers[int(instruction[3], 16)].getvalue()
+
+    n = x % bits
+    a = r.getvalue() >> n
+    b = r.getvalue() << ((bits - n) % 256)
+    value = a | b
+    r.setvalue(hex(value))
 
 
 # If instruction looks like BRXY, jump to the instruction
