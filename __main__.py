@@ -206,7 +206,8 @@ def main():
     while numregisters < 1 or numcells > 16:
         numregisters = int(input("How many registers would you like to have? "))
 
-    icounter = int(input("What hex value would you like to set the instruction counter at? "), 16)
+    icounter = int(input("What hex value would you like to set the instruction "
+                         "counter at? "), 16)
 
     done = False
 
@@ -229,8 +230,11 @@ def main():
         for register in registers:
             print(register.getid(), " ", register.tostr())
 
+        print("Instruction counter: ", str(hex(icounter))[2:])
+
         nextstep = input("Type r to edit a register, m to edit a memory cell, \n"
-                         "e to execute or anything else to quit. ")
+                         "e to execute, i to edit the instruction counter, \n"
+                         "or anything else to quit. ")
 
         if nextstep == 'r':
 
@@ -261,6 +265,10 @@ def main():
                     print("Please enter a two letter hex value between 00 and ff.")
 
             cells[which].setvalue(what)
+
+        elif nextstep == 'i':
+            icounter = int(input("What hex value would you like to set the instruction "
+                                 "counter at? "), 16)
             
         elif nextstep == 'e':
             print("-----EXECUTION-----")
