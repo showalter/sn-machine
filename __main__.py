@@ -203,7 +203,7 @@ def main():
     while numcells < 1 or numcells > 256:
         numcells = int(input("How many memory cells would you like to have? "))
 
-    while numregisters < 1 or numcells > 16:
+    while numregisters < 1 or numregisters > 16:
         numregisters = int(input("How many registers would you like to have? "))
 
     icounter = int(input("What hex value would you like to set the instruction "
@@ -237,7 +237,7 @@ def main():
                          "or anything else to quit. ")
 
         if nextstep == 'r':
-
+            which = None
             while which is None or which < 0 or which > len(registers):
                 which = input("Which register would you like to edit? ")
                 which = int(which, 16)
@@ -252,7 +252,7 @@ def main():
             registers[which].setvalue(what)
 
         elif nextstep == 'm':
-            which = -1
+            which = None
             while which is None or which < 0 or which > len(cells):
                 which = input("Which memory cell would you like to edit? ")
                 which = int(which, 16)
