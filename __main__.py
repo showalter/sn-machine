@@ -1,3 +1,4 @@
+from display import display
 from processor import Cell
 
 cells = []
@@ -7,20 +8,11 @@ icounter = None
 
 complete = False
 
-__instructions = \
-    {'1': 'load_from_cell', '2': 'load_with',
-     '3': 'store', '4': 'move',
-     '5': 'add_complement', '6': 'add_float',
-     '7': 'or', '8': 'and',
-     '9': 'xor', 'a': 'rotate',
-     'b': 'jump', 'c': 'halt'}
-
 
 def execute_instruction(a, b):
     global icounter
     instruction = create_instruction(a.tostr(), b.tostr())
     opcode = instruction[0]
-    operation = __instructions[opcode]
     icounter = icounter + 2
 
     if opcode == '1':
@@ -55,6 +47,7 @@ def create_instruction(a, b):
     completeinstruction = (a + b)
 
     return completeinstruction
+
 
 # If instruction looks like 1RXY, load register R
 # with the bits found in memory cell XY
@@ -222,15 +215,7 @@ def main():
         i = i + 1
 
     while not done:
-        print("Memory Cells")
-        for cell in cells:
-            print(cell.getid(), " ", cell.tostr())
-
-        print("Registers")
-        for register in registers:
-            print(register.getid(), " ", register.tostr())
-
-        print("Instruction counter: ", str(hex(icounter))[2:])
+        display(cells, registers, icounter)
 
         nextstep = input("Type r to edit a register, m to edit a memory cell, \n"
                          "e to execute, i to edit the instruction counter, \n"
