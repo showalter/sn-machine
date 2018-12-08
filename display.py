@@ -50,7 +50,7 @@ def display(cells, registers, icounter):
     i = 0
     for cell in cells:
         print(cell.getid(), " ", cell.tostr(), end=' ')
-        if i % 2 == 0:
+        if i % 2 == 0 and len(cells) > i + 1:
             print(describe(cells[i].tostr(), cells[i + 1].tostr()), end='')
         i += 1
         print("")
