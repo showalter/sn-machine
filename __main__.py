@@ -59,7 +59,6 @@ def load_from_cell(instruction):
     r.setvalue(hex(xy.getvalue()))
 
 
-
 # If instruction looks like 2RXY, load register R
 # with the bit pattern XY
 def load_with(instruction):
@@ -68,6 +67,7 @@ def load_with(instruction):
 
     value = instruction[2:]
     r.setvalue(hex(int(value, 16)))
+
 
 # If instruction looks like 3RXY, store the contents
 # of register R in memory cell XY
@@ -79,7 +79,6 @@ def store(instruction):
     xy.setvalue(hex(r.getvalue()))
 
 
-
 # If instruction looks like 4*RS, move/copy the bit
 # pattern in register R to register S
 def move(instruction):
@@ -87,6 +86,7 @@ def move(instruction):
     s = registers[int(instruction[3], 16)]
 
     s.setvalue(hex(r.getvalue()))
+
 
 # If instruction looks like 5RST, add the bit patterns
 # in registers S and T and store the result in R as
@@ -177,16 +177,20 @@ def jump(instruction):
     if registers[int(instruction[1], 16)].getvalue() == registers[0].getvalue():
         icounter = int(instruction[2:], 16)
 
+
 # Halt execution.
 def halt():
     global complete
     complete = True
 
-def execute():
+
+def execute(step):
     global icounter
-    execute_instruction(cells[icounter], cells[icounter + 1])
-    if not complete and len(cells) >= icounter + 3:
-        execute()
+    if len(cells) >= icounter + 1:
+        execute_instruction(cells[icounter], cells[icounter + 1])
+    if not complete and not step and len(cells) >= icounter + 3:
+        execute(False)
+
 
 def main():
     global icounter, complete
@@ -219,7 +223,7 @@ def main():
 
         nextstep = input("Type r to edit a register, m to edit a memory cell, \n"
                          "e to execute, i to edit the instruction counter, \n"
-                         "or anything else to quit. ")
+                         "enter to step, or anything else to quit. ")
 
         if nextstep == 'r':
             which = None
@@ -261,15 +265,17 @@ def main():
             
         elif nextstep == 'e':
             print("-----EXECUTION-----")
-            execute()
+            execute(False)
             if complete:
                 print("---PROGRAM HALTED--")
                 complete = False
             print("---END EXECUTION---")
+
+        elif nextstep == '':
+            execute(True)
         else:
             done = True
 
 
 if __name__ == "__main__":
     main()
-
