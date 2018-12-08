@@ -197,12 +197,17 @@ def execute():
 
 def main():
     global icounter, complete
+    numcells = -1
+    numregisters = -1
 
-    numcells = int(input("How many memory cells would you like to have? "))
+    while numcells < 1 or numcells > 256:
+        numcells = int(input("How many memory cells would you like to have? "))
 
-    numregisters = int(input("How many registers would you like to have? "))
+    while numregisters < 1 or numregisters > 16:
+        numregisters = int(input("How many registers would you like to have? "))
 
-    icounter = int(input("What hex value would you like to set the instruction counter at? "), 16)
+    icounter = int(input("What hex value would you like to set the instruction "
+                         "counter at? "), 16)
 
     done = False
 
@@ -225,30 +230,46 @@ def main():
         for register in registers:
             print(register.getid(), " ", register.tostr())
 
+        print("Instruction counter: ", str(hex(icounter))[2:])
+
         nextstep = input("Type r to edit a register, m to edit a memory cell, \n"
-                         "e to execute or anything else to quit. ")
+                         "e to execute, i to edit the instruction counter, \n"
+                         "or anything else to quit. ")
 
         if nextstep == 'r':
-            which = input("Which register would you like to edit? ")
+            which = None
+            while which is None or which < 0 or which > len(registers):
+                which = input("Which register would you like to edit? ")
+                which = int(which, 16)
 
-            what = "inital"
+            what = ""
             while len(what) != 2:
-                what = input("What value would you like to put into register " + which + "? ")
+                what = input("What value would you like to put into register " +
+                             str(hex(which))[2:] + "? ")
                 if len(what) != 2 or int(what, 16) < 0 or int(what, 16) > 255:
                     print("Please enter a two letter hex value between 00 and ff.")
 
-            registers[int(which, 16)].setvalue(what)
+            registers[which].setvalue(what)
 
         elif nextstep == 'm':
-            which = input("Which memory cell would you like to edit? ")
+            which = None
+            while which is None or which < 0 or which > len(cells):
+                which = input("Which memory cell would you like to edit? ")
+                which = int(which, 16)
 
-            what = "inital"
+            what = ""
             while len(what) != 2:
-                what = input("What value would you like to put into memory cell " + which + "? ")
+                what = input("What value would you like to put into memory cell " +
+                             str(hex(which))[2:] + "? ")
                 if len(what) != 2 or int(what, 16) < 0 or int(what, 16) > 255:
                     print("Please enter a two letter hex value between 00 and ff.")
 
-            cells[int(which, 16)].setvalue(what)
+            cells[which].setvalue(what)
+
+        elif nextstep == 'i':
+            icounter = int(input("What hex value would you like to set the instruction "
+                                 "counter at? "), 16)
+            
         elif nextstep == 'e':
             print("-----EXECUTION-----")
             execute()

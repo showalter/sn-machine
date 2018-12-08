@@ -18,6 +18,6 @@ class Cell:
 
     def tostr(self):
         if self.value is None:
-            return "__"
+            return "00"
         else:
-            return str(hex(self.value))[2:]
+            return str(hex(self.value))[2:].zfill(2)
