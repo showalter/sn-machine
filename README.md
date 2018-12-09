@@ -15,7 +15,7 @@ This is a machine code simulator coded in Python 3 based upon the
 |7         | RST     | OR the bit patterns in registers S and T and put the result in register R |
 |8         | RST     | AND  the bit patterns in registers S and T and place the result in register R |
 |9         | RST     | XOR the bit patterns in registers S and T and place the result in register R |
-|A         | R*X     | ROTATE the bit pattern in register R one bit to the right X amount of times. Each time placing the bit that started on the low end on the high end.
+|A         | R*X     | ROTATE the bit pattern in register R one bit to the right X amount of times. Each time placing the bit that started on the low end on the high end. |
 |B         | RXY     | JUMP to the instruction located in the memory cell at address XY if the bit pattern in register R is equal to the bit pattern in register number 0. Otherwise, continue with the normal sequence of execution. (The jump is implemented by copying XY into the program counter during the execute phase.) |
 |C         | ***     | HALT |
 
