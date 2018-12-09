@@ -19,7 +19,7 @@ This is a machine code simulator coded in Python 3 based upon the
 |B         | RXY     | JUMP to the instruction located in the memory cell at address XY if the bit pattern in register R is equal to the bit pattern in register number 0. Otherwise, continue with the normal sequence of execution. (The jump is implemented by copying XY into the program counter during the execute phase.) |
 |C         | ***     | HALT |
 
-###How It Works
+##How It Works
 Upon execution of the program you are prompted to choose how many register cell's you would like
 and how many memory cells you would like.
 
