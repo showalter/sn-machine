@@ -18,3 +18,14 @@ This is a machine code simulator coded in Python 3 based upon the
 |A         | R*X     | ROTATE the bit pattern in register R one bit to the right X amount of times. Each time placing the bit that started on the low end on the high end.
 |B         | RXY     | JUMP to the instruction located in the memory cell at address XY if the bit pattern in register R is equal to the bit pattern in register number 0. Otherwise, continue with the normal sequence of execution. (The jump is implemented by copying XY into the program counter during the execute phase.) |
 |C         | ***     | HALT |
+
+###How It Works
+Upon execution of the program you are prompted to choose how many register cell's you would like
+and how many memory cells you would like.
+
+The values of the register cell that may be chosen are 1-16
+
+The values that are allowed to be chosen for memory cells may be 0-255
+
+You are now able to edit the contents of the cells and after having doing so are able to run your
+code.

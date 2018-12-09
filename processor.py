@@ -6,13 +6,13 @@ class Cell:
     def getid(self):
         return self.number[2:]
 
-    # Values must be passed as a string representation of a hex
-    # value, or as a hex value. They should not be passed as ints.
     def setvalue(self, value):
+        """Values are passed as a string representation of a hex value
+        or as a hex value. They are not passed as ints."""
         self.value = int(value, 16)
 
-    # Values will be returned as a base 16 int.
     def getvalue(self):
+        """Values returned are base 16 int."""
         if self.value is not None:
             return self.value
 
