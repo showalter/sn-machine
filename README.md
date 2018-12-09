@@ -20,6 +20,7 @@ This is a machine code simulator coded in Python 3 based upon the
 |C         | ***     | HALT |
 
 ##How It Works
+
 Upon execution of the program you are prompted to choose how many register cell's you would like
 and how many memory cells you would like.
 
