@@ -2,8 +2,32 @@
 This is a machine code simulator coded in Python 3 based upon the 
 [Brookshear Machine](https://w3.cs.jmu.edu/cs101/unit03/bmachine.html).
 
-### Language Description Table
+## Getting Started
 
+### Prerequisites
+The Python 3 interpreter must be installed
+
+### Installation
+Open a terminal and run `git clone https:\\github.com\showalrm\sn-machine`
+
+### Execution
+Run the `__main__` module to execute the program.
+
+## Usage
+Upon execution of the program the user is prompted with the option of choosing the number of register
+cells and the number of memory cells they would like. The user may choose up to 16 register cells
+and up to 256 memory cells.
+
+After configuration, the user may use the following keys to edit the cells.
+
+- `r` - edit the contents of register cells
+- `m` - edit the contents of memory cells
+- `return` - step through the program
+- `i` - edit the instruction counter
+- `e` - execute the program
+- Any other input will quit the program
+
+### Language Description Table
 |Op-Code   | Operand | Description |
 |:--------:|:-------:|-------------|
 |1         | RXY     | LOAD register R with the bits found in memory cell XY |
@@ -19,14 +43,8 @@ This is a machine code simulator coded in Python 3 based upon the
 |B         | RXY     | JUMP to the instruction located in the memory cell at address XY if the bit pattern in register R is equal to the bit pattern in register number 0. Otherwise, continue with the normal sequence of execution. (The jump is implemented by copying XY into the program counter during the execute phase.) |
 |C         | ***     | HALT |
 
+## License
+This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) for more details.
 
-## How it works
-Upon execution of the program the user is prompted with the option of choosing the number of register
-cells and the number of Memory cells they would like. The user may choose between 1-16 register cells
-and 0-255 memory cells.
-
-After the user's cells are chosen the user may edit the contents of the register cell with "R"
-and may edit the memory cell with "M".
-
-The user may use "Enter" to step through the program, and "E" will execute the program.
-
+## Acknowledgement
+The machine code language was created by Glenn Brookshear.
