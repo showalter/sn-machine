@@ -1,4 +1,14 @@
 def describe(a, b):
+    """Displays an explanation of the instruction
+
+    Args:
+        a (str): The string of the first half of the description
+        b (str): The string of the second half of the description
+
+    Returns:
+        The complete description
+
+    """
     instruction = a + b
     opcode = instruction[0]
 
