@@ -64,7 +64,6 @@ def create_instruction(a, b):
     return completeinstruction
 
 
-
 def load_from_cell(instruction):
     """ If instruction looks like 1RXY
     load register R with the bits found in memory cell XY
@@ -79,13 +78,12 @@ def load_from_cell(instruction):
     r.setvalue(hex(xy.getvalue()))
 
 
-
 def load_with(instruction):
     """If instruction looks like 2RXY
     LOAD register R with the bit pattern XY
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a 2
 
     """
 
@@ -100,7 +98,7 @@ def store(instruction):
     STORE the contents of register R in memory cell XY
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a 3
 
     """
     r = registers[int(instruction[1], 16)]
@@ -109,12 +107,13 @@ def store(instruction):
 
     xy.setvalue(hex(r.getvalue()))
 
+
 def move(instruction):
     """If instruction look slike 4*RS
     MOVE the bit pattern in register R to register S
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a 4
 
     """
     r = registers[int(instruction[2], 16)]
@@ -129,7 +128,7 @@ def add_complement(instruction):
     as a two's complement representation
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a 5
 
     """
     r = registers[int(instruction[1], 16)]
@@ -167,7 +166,7 @@ def orinstr(instruction):
     OR the bit patterns in registers S and T and store the result in R
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a 7
 
     """
     r = registers[int(instruction[1], 16)]
@@ -182,7 +181,7 @@ def andinstr(instruction):
     AND the bit patterns in registers S and T and store the result in R
 
     Args:
-        instruction(str):
+        instruction(str): the instruction being executed in this case starts with a 8
 
     """
     r = registers[int(instruction[1], 16)]
@@ -192,13 +191,12 @@ def andinstr(instruction):
     r.setvalue(hex(s.getvalue() & t.getvalue()))
 
 
-
 def xor(instruction):
     """If instruction looks like 9RST
     XOR the bit patterns in registers S and T and store the result in R
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a 9
 
         """
     r = registers[int(instruction[1], 16)]
@@ -208,14 +206,13 @@ def xor(instruction):
     r.setvalue(hex(s.getvalue() ^ t.getvalue()))
 
 
-
 def rotate(instruction):
     """If instruction looks like AR*X
     ROTATE the bit pattern in register R one bit to the right X amount of times.
     (Each time rotated place the bit that started on the low end on the high end)
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with A
 
         """
     bits = 8
@@ -230,14 +227,13 @@ def rotate(instruction):
     r.setvalue(hex(value))
 
 
-
 def jump(instruction):
     """If instruction looks like BRXY
     JUMP to the instruction in memory cell at address XY if the bit pattern in
     register R is equal to the bit pattern in register 0
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a B
 
     """
     global icounter
@@ -245,13 +241,12 @@ def jump(instruction):
         icounter = int(instruction[2:], 16)
 
 
-# Halt execution.
 def halt():
     """If instruction looks like C***
     HALT the execution of the program
 
     Args:
-        instruction (str):
+        instruction (str): the instruction being executed in this case starts with a C
 
     """
     global complete

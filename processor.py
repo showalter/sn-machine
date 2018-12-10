@@ -10,12 +10,18 @@ class Cell:
         """Values must be passed as a string representation of a hex value
         or as a hex value. They should not be passed as ints
 
+        Args:
+            value (str): a hex representation of the contents of the cell
+
         """
         self.value = int(value, 16)
 
 
     def getvalue(self):
         """Values will be returned as base 16 int.
+
+        Return:
+            int: an integer representation of the cells contents
 
         """
         if self.value is not None:

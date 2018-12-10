@@ -6,7 +6,7 @@ def describe(a, b):
         b (str): The string of the second half of the description
 
     Returns:
-        The complete description
+        str: The complete description
 
     """
     instruction = a + b
