@@ -69,7 +69,7 @@ def load_from_cell(instruction):
     load register R with the bits found in memory cell XY
 
     Args:
-        instruction (str): instruction (str): the instruction being executed in this case starts with a 1
+        instruction (str): instruction (str): the instruction being executed, in this case it starts with a 1
     """
     r = registers[int(instruction[1], 16)]
     xy = instruction[2:]
@@ -83,7 +83,7 @@ def load_with(instruction):
     LOAD register R with the bit pattern XY
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a 2
+        instruction (str): the instruction being executed, in this case it starts with a 2
 
     """
 
@@ -98,7 +98,7 @@ def store(instruction):
     STORE the contents of register R in memory cell XY
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a 3
+        instruction (str): the instruction being executed, in this case it starts with a 3
 
     """
     r = registers[int(instruction[1], 16)]
@@ -113,7 +113,7 @@ def move(instruction):
     MOVE the bit pattern in register R to register S
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a 4
+        instruction (str): the instruction being executed, in this case it starts with a 4
 
     """
     r = registers[int(instruction[2], 16)]
@@ -128,7 +128,7 @@ def add_complement(instruction):
     as a two's complement representation
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a 5
+        instruction (str): the instruction being executed, in this case it starts with a 5
 
     """
     r = registers[int(instruction[1], 16)]
@@ -166,7 +166,7 @@ def orinstr(instruction):
     OR the bit patterns in registers S and T and store the result in R
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a 7
+        instruction (str): the instruction being executed, in this case it starts with a 7
 
     """
     r = registers[int(instruction[1], 16)]
@@ -181,7 +181,7 @@ def andinstr(instruction):
     AND the bit patterns in registers S and T and store the result in R
 
     Args:
-        instruction(str): the instruction being executed in this case starts with a 8
+        instruction(str): the instruction being executed, in this case it starts with a 8
 
     """
     r = registers[int(instruction[1], 16)]
@@ -196,7 +196,7 @@ def xor(instruction):
     XOR the bit patterns in registers S and T and store the result in R
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a 9
+        instruction (str): the instruction being executed, in this case it starts with a 9
 
         """
     r = registers[int(instruction[1], 16)]
@@ -212,7 +212,7 @@ def rotate(instruction):
     (Each time rotated place the bit that started on the low end on the high end)
 
     Args:
-        instruction (str): the instruction being executed in this case starts with A
+        instruction (str): the instruction being executed, in this case it starts with an A
 
         """
     bits = 8
@@ -233,7 +233,7 @@ def jump(instruction):
     register R is equal to the bit pattern in register 0
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a B
+        instruction (str): the instruction being executed, in this case it starts with a B
 
     """
     global icounter
@@ -246,7 +246,7 @@ def halt():
     HALT the execution of the program
 
     Args:
-        instruction (str): the instruction being executed in this case starts with a C
+        instruction (str): the instruction being executed, in this case it starts with a C
 
     """
     global complete
