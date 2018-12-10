@@ -59,7 +59,8 @@ def create_instruction(a, b):
 def load_from_cell(instruction):
     """If the instruction looks like 1RXY
     LOAD register R with the bits found in memory cell XY
-    :param"""
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
     xy = instruction[2:]
     xy = cells[int(xy, 16)]
@@ -69,7 +70,9 @@ def load_from_cell(instruction):
 def load_with(instruction):
 
     """If the instruction looks like2RXY
-    LOAD register R with the hex value XY"""
+    LOAD register R with the hex value XY
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
 
     value = instruction[2:]
@@ -77,7 +80,9 @@ def load_with(instruction):
 
 def store(instruction):
     """If the instruction looks like 3RXY
-    STORE the contents of register R into memory cell XY"""
+    STORE the contents of register R into memory cell XY
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
     xy = instruction[2:]
     xy = cells[int(xy, 16)]
@@ -86,7 +91,9 @@ def store(instruction):
 
 def move(instruction):
     """IF instruction looks like 4*RS
-    MOVE the bit pattern found in register R into register S."""
+    MOVE the bit pattern found in register R into register S.
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[2], 16)]
     s = registers[int(instruction[3], 16)]
 
@@ -94,7 +101,9 @@ def move(instruction):
 
 def add_complement(instruction):
     """IF instruction looks like 5RST
-    ADD the bit patterns in register S and T and store the result in register R"""
+    ADD the bit patterns in register S and T and store the result in register R
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -125,7 +134,9 @@ def add_float(instruction):
 
 def orinstr(instruction):
     """If instruction looks like 7RST
-    OR the bit patterns in register S and T and store the result in R"""
+    OR the bit patterns in register S and T and store the result in R
+    :param: str
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -134,7 +145,9 @@ def orinstr(instruction):
 
 def andinstr(instruction):
     """If instruction looks like 8RST
-    AND the bit patterns in S and T and store the result in R"""
+    AND the bit patterns in S and T and store the result in R
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -146,7 +159,9 @@ def andinstr(instruction):
 # in registers S and T and store the result in R
 def xor(instruction):
     """If instruction looks like 9RST
-    XOR the bit patterns in registers S and T and store the result in R"""
+    XOR the bit patterns in registers S and T and store the result in R
+    :param str:
+    :type instruction:"""
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -156,7 +171,9 @@ def xor(instruction):
 def rotate(instruction):
     """IF instruction looks like AR*X
     ROTATE the bit pattern in register R (one bit to the right 'X' amount of times)
-    Each time place the bit that started on the low end on the high end"""
+    Each time place the bit that started on the low end on the high end
+    :param str:
+    :type instruction:"""
     bits = 8
 
     r = registers[int(instruction[1], 16)]
@@ -171,14 +188,18 @@ def rotate(instruction):
 def jump(instruction):
     """If instruction looks like BRXY
     JUMP the instruction in the memory cell at address XY
-    if the bit pattern in register X is equal to the bit pattern in register 0"""
+    if the bit pattern in register X is equal to the bit pattern in register 0
+    :param str:
+    :type instruction:"""
     global icounter
     if registers[int(instruction[1], 16)].getvalue() == registers[0].getvalue():
         icounter = int(instruction[2:], 16)
 
 def halt():
     """If instruction looks like C***
-    HALT the execution of the program"""
+    HALT the execution of the program
+    :param str:
+    :type instruction:"""
     global complete
     complete = True
 
