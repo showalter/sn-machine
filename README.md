@@ -35,7 +35,7 @@ After configuration, the user may use the following keys to edit the cells.
 |3         | RXY     | STORE the contents found in register R in the memory cell XY |
 |4         | *RS     | MOVE the bit pattern found in register R to register S | 
 |5         | RST     | ADD the bit patterns in registers S and T and put the result in register R in a two’s complement complement representation|
-|6         | RST     | ADD the bit patterns in registers S and T and put the result in register R in a floating-point notation (**NOTE** Op-Code 6 does the same as 5)|
+|6         | RST     | ADD the bit patterns in registers S and T and put the result in register R in a floating-point notation (**NOTE** Op-Code 6 does the same as 5 for now, until floating point addition is available)|
 |7         | RST     | OR the bit patterns in registers S and T and put the result in register R |
 |8         | RST     | AND  the bit patterns in registers S and T and place the result in register R |
 |9         | RST     | XOR the bit patterns in registers S and T and place the result in register R |

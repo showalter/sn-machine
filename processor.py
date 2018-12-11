@@ -7,8 +7,9 @@ class Cell:
         return self.number[2:]
 
     def setvalue(self, value):
-        """Values must be passed as a string representation of a hex value
-        or as a hex value. They should not be passed as ints
+        """Sets the contents of the cell.
+        (The value must be passed as a hexadecimal value or as a string
+        representation of a hexadecimal value.
 
         Args:
             value (str): a hex representation of the contents of the cell
@@ -18,10 +19,10 @@ class Cell:
 
 
     def getvalue(self):
-        """Values will be returned as base 16 int.
+        """Returns the contents of the cell as an integer.
 
-        Return:
-            int: an integer representation of the cells contents
+        Returns:
+            int: an integer representation of the cell's contents
 
         """
         if self.value is not None:

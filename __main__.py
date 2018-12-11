@@ -69,7 +69,7 @@ def load_from_cell(instruction):
     load register R with the bits found in memory cell XY
 
     Args:
-        instruction (str): instruction (str): the instruction being executed, in this case it starts with a 1
+        instruction (str): the instruction being executed, in this case it starts with a 1
     """
     r = registers[int(instruction[1], 16)]
     xy = instruction[2:]
