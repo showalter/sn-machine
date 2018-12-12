@@ -1,3 +1,10 @@
+"""
+The display module is used for displaying the machine state and descriptions of instructions
+
+Copyright (c) Ryan Showalter and Cole Nutter under the terms of the MIT License
+"""
+
+
 def describe(a, b):
     """Displays an explanation of the instruction
 
@@ -7,8 +14,8 @@ def describe(a, b):
 
     Returns:
         str: The complete description
-
     """
+
     instruction = a + b
     opcode = instruction[0]
 
@@ -56,13 +63,12 @@ def describe(a, b):
 
 
 def display(cells, registers, icounter):
-    """ Displays the memory cells register, instruction counter and their contents
+    """ Displays the memory cells, registers, instruction counter, and their contents
 
     Args:
-        cells (list of cell): the complete list of memory cells
-        registers (list of cell): the complete list of register cells
-        icoounter (int):
-
+        cells (list of Cell): the complete list of memory cells
+        registers (list of Cell): the complete list of register cells
+        icounter (int): the instruction counter for the program
     """
     print("Memory Cells")
     i = 0

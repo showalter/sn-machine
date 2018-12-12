@@ -1,7 +1,15 @@
-"""The main file contains the main function and other functions for constructing cells and executing machine code
+"""
+The main module contains the main function and other functions for constructing cells and executing machine code
+
+Copyright (c) 2018 Ryan Showalter and Cole Nutter under the terms of the MIT License
+
+Attributes:
+    cells (list of Cell): A list of all memory cells
+    registers (list of Cell): A list of all registers
+    icounter (int): The numeric location of the execution counter
+    complete (bool): True when program is halted; false otherwise
 
 """
-
 
 from display import display
 from processor import Cell
@@ -15,12 +23,13 @@ complete = False
 
 
 def execute_instruction(a, b):
-    """Execute the contents of two memory cells.
+    """ Execute the contents of two memory cells.
 
     Args:
         a (cell): The cell that hold the first half of the instruction
         b (cell): The cell that hold the second half of the instruction
     """
+
     global icounter
     instruction = create_instruction(a.tostr(), b.tostr())
     opcode = instruction[0]
@@ -55,7 +64,7 @@ def execute_instruction(a, b):
 
 
 def create_instruction(a, b):
-    """Creates a full instruction from the contents of two cells
+    """ Create a full instruction from the contents of two cells
 
     Args:
         a (str): The string for the first half of the instruction
@@ -64,18 +73,22 @@ def create_instruction(a, b):
     Returns:
         str: The complete instruction
     """
+
     completeinstruction = (a + b)
 
     return completeinstruction
 
 
 def load_from_cell(instruction):
-    """ If instruction looks like 1RXY
-    load register R with the bits found in memory cell XY
+    """ Load a register with the contents of a memory cell
+
+    The instruction should look like (opcode)RXY, where R is the register being loaded, and
+    XY is the memory cell with the contents being moved.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 1
     """
+
     r = registers[int(instruction[1], 16)]
     xy = instruction[2:]
     xy = cells[int(xy, 16)]
@@ -84,12 +97,13 @@ def load_from_cell(instruction):
 
 
 def load_with(instruction):
-    """If instruction looks like 2RXY
-    LOAD register R with the bit pattern XY
+    """ Load a register with a specific value
+
+    The instruction should look like (opcode)RXY, where R is the register being loaded, and
+    XY is the pattern being put into the register.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 2
-
     """
 
     r = registers[int(instruction[1], 16)]
@@ -99,13 +113,15 @@ def load_with(instruction):
 
 
 def store(instruction):
-    """ If instruction looks like 3RXY
-    STORE the contents of register R in memory cell XY
+    """ Store the contents of a register in a memory cell
+
+    The instruction should look like (opcode)RXY, where R is the register with contents being stored,
+    and XY is the memory cell where the contents are being stored.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 3
-
     """
+
     r = registers[int(instruction[1], 16)]
     xy = instruction[2:]
     xy = cells[int(xy, 16)]
@@ -114,13 +130,15 @@ def store(instruction):
 
 
 def move(instruction):
-    """If instruction look slike 4*RS
-    MOVE the bit pattern in register R to register S
+    """ Move/copy the contents of a register to another register
+
+    The instruction should look like (opcode)*RS, where R is the register being copied, and S
+    is the register being copied to.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 4
-
     """
+
     r = registers[int(instruction[2], 16)]
     s = registers[int(instruction[3], 16)]
 
@@ -128,14 +146,15 @@ def move(instruction):
 
 
 def add_complement(instruction):
-    """If instruction looks like 5RST
-    ADD the bit patterns in registers S and T and store the result in R
-    as a two's complement representation
+    """ Add the values of two registers in twos complement notation and place the result in a register.
+
+    The instruction should look like (opcode)RST, where S and T are the registers whose contents are being
+    added, and R is the register where the result is stored.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 5
-
     """
+
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -156,19 +175,24 @@ def add_complement(instruction):
     r.setvalue(hex(value))
 
 
-# If instruction looks like 6RST, add the bit patterns
-# in registers S and T and store the result in R as
-# two's complement. This may be updated later to add
-# numbers as floats, but precision with 8 bits is not
-# great, and it's hard to see situations where this
-# little precision is useful.
 def add_float(instruction):
+    """ Add two registers together. This passes the instruction to add_complement() for now.
+
+    The instruction should look like (opcode)RST, where S and T are the registers whose contents are being
+    added, and R is the register where the result is being stored.
+
+    Args:
+        instruction (str): the instruction being executed, in this case it starts with a 6
+    """
+
     add_complement(instruction)
 
 
 def orinstr(instruction):
-    """If instruction looks like 7RST
-    OR the bit patterns in registers S and T and store the result in R
+    """ Or the bit patterns in two registers together.
+
+    The instruction should look like (opcode)RST, where S and T are the registers whose contents are
+    used as operands for the or operation, and R is the register where the result is stored.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 7
@@ -182,13 +206,15 @@ def orinstr(instruction):
 
 
 def andinstr(instruction):
-    """If instruction looks like 8RST
-    AND the bit patterns in registers S and T and store the result in R
+    """ And the bit patterns in two registers together.
+
+    The instruction should look like (opcode)RST, where S and T are the registers whose contents are
+    used as operands for the and operation, and R is the register where the result is stored.
 
     Args:
-        instruction(str): the instruction being executed, in this case it starts with a 8
-
+        instruction (str): the instruction being executed, in this case it starts with an 8
     """
+
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -197,13 +223,15 @@ def andinstr(instruction):
 
 
 def xor(instruction):
-    """If instruction looks like 9RST
-    XOR the bit patterns in registers S and T and store the result in R
+    """ Xor the bit patterns in two registers together.
+
+    The instruction should look like (opcode)RST, where S and T are the registers whose contents are
+    used as operands for the xor operation, and R is the register where the result is stored.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a 9
+    """
 
-        """
     r = registers[int(instruction[1], 16)]
     s = registers[int(instruction[2], 16)]
     t = registers[int(instruction[3], 16)]
@@ -212,14 +240,16 @@ def xor(instruction):
 
 
 def rotate(instruction):
-    """If instruction looks like AR*X
-    ROTATE the bit pattern in register R one bit to the right X amount of times.
-    (Each time rotated place the bit that started on the low end on the high end)
+    """ Rotate the contents of a register to the right a number of times, with bits that fall off the
+    low order end being replaced on the high order end.
+
+    The instruction should look like (opcode)R*X, where R is the register whose contents are being rotated,
+    and X is the number of rotations done.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with an A
+    """
 
-        """
     bits = 8
 
     r = registers[int(instruction[1], 16)]
@@ -233,35 +263,32 @@ def rotate(instruction):
 
 
 def jump(instruction):
-    """If instruction looks like BRXY
-    JUMP to the instruction in memory cell at address XY if the bit pattern in
-    register R is equal to the bit pattern in register 0
+    """ Conditionally jump to a different memory cell, by changing the instruction counter.
+
+    The instruction should look like (opcode)RXY, where XY is the register being jumped to, if
+    the contents of register R are equal to the contents of register 0.
 
     Args:
         instruction (str): the instruction being executed, in this case it starts with a B
-
     """
+
     global icounter
     if registers[int(instruction[1], 16)].getvalue() == registers[0].getvalue():
         icounter = int(instruction[2:], 16)
 
 
 def halt():
-    """If instruction looks like C***
-    HALT the execution of the program
+    """ Halt the execution of the program"""
 
-    """
     global complete
     complete = True
 
 
 def execute(step):
-    """Execute the opperation specified by the instruction counter
-    in the next cell
+    """ Execute the operation specified by the instruction counter
 
     Args:
-        step (bool): if step is True execute 1 time. If step if false execute until completion.
-
+        step (bool): if True, execute once; otherwise, execute until completion.
     """
 
     global icounter
@@ -273,15 +300,13 @@ def execute(step):
 
 def main():
     """ The main function constructs memory and register cells and allows the user to edit them
-     and executes the contents of the cells
-
-     """
-
+    and execute the contents of those cells"""
 
     global icounter, complete
     numcells = -1
     numregisters = -1
 
+    # Prompt for the desired number of memory cells and registers
     while numcells < 1 or numcells > 256:
         numcells = int(input("How many memory cells would you like to have? "))
 
@@ -310,6 +335,7 @@ def main():
                          "e to execute, i to edit the instruction counter, \n"
                          "enter to step, or anything else to quit. ")
 
+        # Edit register cells
         if nextstep == 'r':
             which = None
             while which is None or which < 0 or which > len(registers):
@@ -327,6 +353,7 @@ def main():
                 i += 2
                 j += 1
 
+        # Edit memory cells
         elif nextstep == 'm':
             which = None
             while which is None or which < 0 or which > len(cells):
@@ -344,10 +371,12 @@ def main():
                 i += 2
                 j += 1
 
+        # Edit the instruction counter
         elif nextstep == 'i':
             icounter = int(input("What hex value would you like to set the instruction "
                                  "counter at? "), 16)
-            
+
+        # Execute until completion
         elif nextstep == 'e':
             print("-----EXECUTION-----")
             execute(False)
@@ -356,6 +385,7 @@ def main():
                 complete = False
             print("---END EXECUTION---")
 
+        # Execute once
         elif nextstep == '':
             execute(True)
         else:
@@ -363,7 +393,5 @@ def main():
 
 
 if __name__ == "__main__":
-    """Execute the main function
-    
-    """
+    """Execute the main function"""
     main()

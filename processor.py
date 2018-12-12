@@ -1,58 +1,57 @@
+"""
+The processor module contains the Cell class
+
+Copyright (c) Ryan Showalter and Cole Nutter under the terms of the MIT License
+"""
+
+
 class Cell:
     """an encapsulation of a memory cell or register
 
     Attributes:
-        id (int): the number of the cell
-        value (int): the contents of the cell
-
+        __number (int): the number of the cell
+        __value (int): the contents of the cell
     """
-
 
     def __init__(self, number):
-        """Constructs and intializes the id and value for a cell
+        """ Construct and initialize the id and value of a cell"""
 
-        """
-        self.number = number
-        self.value = None
-
+        self.__number = number
+        self.__value = None
 
     def getid(self):
-        """Returns the string representation of the ID
+        """ Return a string representation of a cell's id"""
 
-    """
-        return self.number[2:]
-
+        return self.__number[2:]
 
     def setvalue(self, value):
-        """Sets the contents of the cell.
+        """ Set the contents of a cell
 
         The value must be passed as a hexadecimal value or as a string
         representation of a hexadecimal value.
 
         Args:
             value (str): a hex representation of the contents of the cell
-
         """
-        self.value = int(value, 16)
 
+        self.__value = int(value, 16)
 
     def getvalue(self):
-        """Returns the contents of the cell as an integer.
+        """ Return the contents of a cell as an integer
 
         Returns:
             int: an integer representation of the cell's contents
-
         """
-        if self.value is not None:
-            return self.value
 
+        if self.__value is not None:
+            return self.__value
+        else:
+            return 0
 
     def tostr(self):
-        """Returns the a string reorientation of the contents of the cell.
+        """ Return a string representation of the contents of the cell"""
 
-        """
-
-        if self.value is None:
+        if self.__value is None:
             return "00"
         else:
-            return str(hex(self.value))[2:].zfill(2)
+            return str(hex(self.__value))[2:].zfill(2)
