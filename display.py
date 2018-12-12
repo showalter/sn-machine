@@ -56,6 +56,14 @@ def describe(a, b):
 
 
 def display(cells, registers, icounter):
+    """ Displays the memory cells register, instruction counter and their contents
+
+    Args:
+        cells (list of cell): the complete list of memory cells
+        registers (list of cell): the complete list of register cells
+        icoounter (int):
+
+    """
     print("Memory Cells")
     i = 0
     for cell in cells:

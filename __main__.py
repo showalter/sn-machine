@@ -1,3 +1,8 @@
+"""The main file contains the main function and other functions for constructing cells and executing machine code
+
+"""
+
+
 from display import display
 from processor import Cell
 
@@ -245,15 +250,20 @@ def halt():
     """If instruction looks like C***
     HALT the execution of the program
 
-    Args:
-        instruction (str): the instruction being executed, in this case it starts with a C
-
     """
     global complete
     complete = True
 
 
 def execute(step):
+    """Execute the opperation specified by the instruction counter
+    in the next cell
+
+    Args:
+        step (bool): if step is True execute 1 time. If step if false execute until completion.
+
+    """
+
     global icounter
     if len(cells) >= icounter + 1:
         execute_instruction(cells[icounter], cells[icounter + 1])
@@ -262,6 +272,12 @@ def execute(step):
 
 
 def main():
+    """ The main function constructs memory and register cells and allows the user to edit them
+     and executes the contents of the cells
+
+     """
+
+
     global icounter, complete
     numcells = -1
     numregisters = -1
@@ -347,4 +363,7 @@ def main():
 
 
 if __name__ == "__main__":
+    """Execute the main function
+    
+    """
     main()
