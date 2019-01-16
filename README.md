@@ -8,7 +8,7 @@ This is a machine code simulator coded in Python 3 based upon the
 The Python 3 interpreter must be installed
 
 ### Installation
-Open a terminal and run `git clone https:\\github.com\showalrm\sn-machine`
+Open a terminal and run `git clone https://github.com/showalrm/sn-machine`
 
 ### Execution
 Run the `__main__` module to execute the program.
